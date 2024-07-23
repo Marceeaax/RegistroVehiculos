@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Estacionamiento</title>
+</head>
+<body>
+    <h1>Control de Vehículos Estacionados</h1>
+    <a href="{{ url_for('agregar') }}">Agregar Vehículo</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Placa</th>
+                <th>Propietario</th>
+                <th>Modelo</th>
+                <th>Fecha Ingreso</th>
+                <th>Fecha Salida</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vehiculo in vehiculos %}
+                <tr>
+                    <td>{{ vehiculo.placa }}</td>
+                    <td>{{ vehiculo.propietario }}</td>
+                    <td>{{ vehiculo.modelo }}</td>
+                    <td>{{ vehiculo.fecha_ingreso }}</td>
+                    <td>{{ vehiculo.fecha_salida }}</td>
+                    <td>
+                        <a href="{{ url_for('editar', id=vehiculo.id) }}">Editar</a>
+                        <a href="{{ url_for('eliminar', id=vehiculo.id) }}">Eliminar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

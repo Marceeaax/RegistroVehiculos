@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Vehículo</title>
+</head>
+<body>
+    <h1>Editar Vehículo</h1>
+    <form action="{{ url_for('editar', id=vehiculo.id) }}" method="post">
+        <label for="placa">Placa:</label>
+        <input type="text" name="placa" id="placa" value="{{ vehiculo.placa }}" required><br>
+        <label for="propietario">Propietario:</label>
+        <input type="text" name="propietario" id="propietario" value="{{ vehiculo.propietario }}" required><br>
+        <label for="modelo">Modelo:</label>
+        <input type="text" name="modelo" id="modelo" value="{{ vehiculo.modelo }}" required><br>
+        <label for="fecha_ingreso">Fecha de Ingreso:</label>
+        <input type="datetime-local" name="fecha_ingreso" id="fecha_ingreso" value="{{ vehiculo.fecha_ingreso }}" required><br>
+        <label for="fecha_salida">Fecha de Salida:</label>
+        <input type="datetime-local" name="fecha_salida" id="fecha_salida" value="{{ vehiculo.fecha_salida }}"><br>
+        <button type="submit">Actualizar</button>
+    </form>
+</body>
+</html>
