@@ -1,0 +1,338 @@
+[
+    {
+        "chapa": "ABC123",
+        "propietario": "Juan Perez",
+        "modelo": "Toyota Corolla",
+        "color": "Rojo",
+        "area": "Administracion",
+        "contacto": "0987123456"
+    },
+    {
+        "chapa": "DEF456",
+        "propietario": "Maria Lopez",
+        "modelo": "Honda Civic",
+        "color": "Azul",
+        "area": "Contabilidad",
+        "contacto": "0987654321"
+    },
+    {
+        "chapa": "GHI789",
+        "propietario": "Carlos Ruiz",
+        "modelo": "Ford Fiesta",
+        "color": "Negro",
+        "area": "Recursos Humanos",
+        "contacto": "0978123456"
+    },
+    {
+        "chapa": "JKL012",
+        "propietario": "Laura Martinez",
+        "modelo": "Chevrolet Spark",
+        "color": "Blanco",
+        "area": "Marketing",
+        "contacto": "0978654321"
+    },
+    {
+        "chapa": "MNO345",
+        "propietario": "Pedro Gonzalez",
+        "modelo": "Nissan Sentra",
+        "color": "Gris",
+        "area": "Ventas",
+        "contacto": "0968123456"
+    },
+    {
+        "chapa": "PQR678",
+        "propietario": "Ana Torres",
+        "modelo": "Mazda 3",
+        "color": "Verde",
+        "area": "Logistica",
+        "contacto": "0968654321"
+    },
+    {
+        "chapa": "STU901",
+        "propietario": "Jorge Diaz",
+        "modelo": "Kia Rio",
+        "color": "Amarillo",
+        "area": "Produccion",
+        "contacto": "0958123456"
+    },
+    {
+        "chapa": "VWX234",
+        "propietario": "Sofia Romero",
+        "modelo": "Hyundai Accent",
+        "color": "Plateado",
+        "area": "Compras",
+        "contacto": "0958654321"
+    },
+    {
+        "chapa": "YZA567",
+        "propietario": "Luis Fernandez",
+        "modelo": "Volkswagen Golf",
+        "color": "Azul",
+        "area": "IT",
+        "contacto": "0948123456"
+    },
+    {
+        "chapa": "BCD890",
+        "propietario": "Gabriela Mendez",
+        "modelo": "Renault Clio",
+        "color": "Rojo",
+        "area": "Calidad",
+        "contacto": "0948654321"
+    },
+    {
+        "chapa": "EFG123",
+        "propietario": "Miguel Vargas",
+        "modelo": "Peugeot 208",
+        "color": "Negro",
+        "area": "Investigacion",
+        "contacto": "0938123456"
+    },
+    {
+        "chapa": "HIJ456",
+        "propietario": "Diana Silva",
+        "modelo": "Fiat Uno",
+        "color": "Blanco",
+        "area": "Desarrollo",
+        "contacto": "0938654321"
+    },
+    {
+        "chapa": "ABC123",
+        "propietario": "Juan Perez",
+        "modelo": "Toyota Corolla",
+        "color": "Rojo",
+        "area": "Administracion",
+        "contacto": "0987123456"
+    },
+    {
+        "chapa": "DEF456",
+        "propietario": "Maria Lopez",
+        "modelo": "Honda Civic",
+        "color": "Azul",
+        "area": "Contabilidad",
+        "contacto": "0987654321"
+    },
+    {
+        "chapa": "GHI789",
+        "propietario": "Carlos Ruiz",
+        "modelo": "Ford Fiesta",
+        "color": "Negro",
+        "area": "Recursos Humanos",
+        "contacto": "0978123456"
+    },
+    {
+        "chapa": "JKL012",
+        "propietario": "Laura Martinez",
+        "modelo": "Chevrolet Spark",
+        "color": "Blanco",
+        "area": "Marketing",
+        "contacto": "0978654321"
+    },
+    {
+        "chapa": "MNO345",
+        "propietario": "Pedro Gonzalez",
+        "modelo": "Nissan Sentra",
+        "color": "Gris",
+        "area": "Ventas",
+        "contacto": "0968123456"
+    },
+    {
+        "chapa": "PQR678",
+        "propietario": "Ana Torres",
+        "modelo": "Mazda 3",
+        "color": "Verde",
+        "area": "Logistica",
+        "contacto": "0968654321"
+    },
+    {
+        "chapa": "STU901",
+        "propietario": "Jorge Diaz",
+        "modelo": "Kia Rio",
+        "color": "Amarillo",
+        "area": "Produccion",
+        "contacto": "0958123456"
+    },
+    {
+        "chapa": "VWX234",
+        "propietario": "Sofia Romero",
+        "modelo": "Hyundai Accent",
+        "color": "Plateado",
+        "area": "Compras",
+        "contacto": "0958654321"
+    },
+    {
+        "chapa": "YZA567",
+        "propietario": "Luis Fernandez",
+        "modelo": "Volkswagen Golf",
+        "color": "Azul",
+        "area": "IT",
+        "contacto": "0948123456"
+    },
+    {
+        "chapa": "BCD890",
+        "propietario": "Gabriela Mendez",
+        "modelo": "Renault Clio",
+        "color": "Rojo",
+        "area": "Calidad",
+        "contacto": "0948654321"
+    },
+    {
+        "chapa": "EFG123",
+        "propietario": "Miguel Vargas",
+        "modelo": "Peugeot 208",
+        "color": "Negro",
+        "area": "Investigacion",
+        "contacto": "0938123456"
+    },
+    {
+        "chapa": "HIJ456",
+        "propietario": "Diana Silva",
+        "modelo": "Fiat Uno",
+        "color": "Blanco",
+        "area": "Desarrollo",
+        "contacto": "0938654321"
+    },
+    {
+        "chapa": "KLM789",
+        "propietario": "Ricardo Flores",
+        "modelo": "Ford Focus",
+        "color": "Gris",
+        "area": "Marketing",
+        "contacto": "0928123456"
+    },
+    {
+        "chapa": "NOP012",
+        "propietario": "Sandra Gomez",
+        "modelo": "Chevrolet Cruze",
+        "color": "Azul",
+        "area": "Recursos Humanos",
+        "contacto": "0928654321"
+    },
+    {
+        "chapa": "QRS345",
+        "propietario": "Fernando Diaz",
+        "modelo": "Toyota Prius",
+        "color": "Verde",
+        "area": "Administracion",
+        "contacto": "0918123456"
+    },
+    {
+        "chapa": "TUV678",
+        "propietario": "Carmen Morales",
+        "modelo": "Honda Accord",
+        "color": "Negro",
+        "area": "Contabilidad",
+        "contacto": "0918654321"
+    },
+    {
+        "chapa": "WXY901",
+        "propietario": "Hugo Jimenez",
+        "modelo": "Nissan Altima",
+        "color": "Plateado",
+        "area": "Ventas",
+        "contacto": "0908123456"
+    },
+    {
+        "chapa": "ZAB234",
+        "propietario": "Lucia Fernandez",
+        "modelo": "Mazda CX-5",
+        "color": "Rojo",
+        "area": "IT",
+        "contacto": "0908654321"
+    },
+    {
+        "chapa": "CDE567",
+        "propietario": "Alberto Mendez",
+        "modelo": "Kia Sportage",
+        "color": "Blanco",
+        "area": "Logistica",
+        "contacto": "0898123456"
+    },
+    {
+        "chapa": "FGH890",
+        "propietario": "Patricia Ruiz",
+        "modelo": "Hyundai Elantra",
+        "color": "Gris",
+        "area": "Produccion",
+        "contacto": "0898654321"
+    },
+    {
+        "chapa": "IJK123",
+        "propietario": "Manuel Torres",
+        "modelo": "Ford Escape",
+        "color": "Azul",
+        "area": "Compras",
+        "contacto": "0888123456"
+    },
+    {
+        "chapa": "LMN456",
+        "propietario": "Elena Vargas",
+        "modelo": "Toyota RAV4",
+        "color": "Verde",
+        "area": "Calidad",
+        "contacto": "0888654321"
+    },
+    {
+        "chapa": "OPQ789",
+        "propietario": "Mario Gutierrez",
+        "modelo": "Honda CR-V",
+        "color": "Negro",
+        "area": "Desarrollo",
+        "contacto": "0878123456"
+    },
+    {
+        "chapa": "RST012",
+        "propietario": "Carla Espinoza",
+        "modelo": "Chevrolet Traverse",
+        "color": "Rojo",
+        "area": "Investigacion",
+        "contacto": "0878654321"
+    },
+    {
+        "chapa": "UVW345",
+        "propietario": "Daniela Fernandez",
+        "modelo": "Ford Explorer",
+        "color": "Blanco",
+        "area": "Administracion",
+        "contacto": "0868123456"
+    },
+    {
+        "chapa": "XYZ678",
+        "propietario": "Javier Gomez",
+        "modelo": "Hyundai Tucson",
+        "color": "Gris",
+        "area": "Recursos Humanos",
+        "contacto": "0868654321"
+    },
+    {
+        "chapa": "YZA910",
+        "propietario": "Luis Martinez",
+        "modelo": "Nissan Rogue",
+        "color": "Plateado",
+        "area": "Contabilidad",
+        "contacto": "0858123456"
+    },
+    {
+        "chapa": "BCD234",
+        "propietario": "Gabriela Mendez",
+        "modelo": "Volkswagen Jetta",
+        "color": "Negro",
+        "area": "Ventas",
+        "contacto": "0858654321"
+    },
+    {
+        "chapa": "EFG567",
+        "propietario": "Miguel Vargas",
+        "modelo": "Renault Sandero",
+        "color": "Rojo",
+        "area": "Logistica",
+        "contacto": "0848123456"
+    },
+    {
+        "chapa": "HIJ890",
+        "propietario": "Diana Silva",
+        "modelo": "Fiat Palio",
+        "color": "Azul",
+        "area": "Produccion",
+        "contacto": "0848654321"
+    }
+]
