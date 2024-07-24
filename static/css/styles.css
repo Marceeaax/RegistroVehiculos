@@ -1,5 +1,5 @@
 body {
-    background-color: #e9f1f7;
+    background-color: #fcfcfc;
     font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
@@ -10,12 +10,15 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
+    width: 100%; /* Aumentar el ancho del contenedor */
+    max-width: 1300px; /* Limitar el ancho máximo del contenedor */
+    margin: auto;
 }
 
 .table-responsive {
-    margin: 0 auto;
-    width: 90%;
     flex: 1;
+    height: 80vh; /* Ajustar la altura de la tabla */
+    overflow-y: auto;
 }
 
 .table-hover tbody tr:hover {
@@ -73,3 +76,8 @@ body {
     opacity: 1;
     height: auto;
 }
+
+.field-error {
+    border-color: red;
+}
+

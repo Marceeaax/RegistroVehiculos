@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///vehiculos.db'
@@ -53,9 +54,14 @@ def agregar():
     contacto = request.form['contacto']
     observacion = request.form['observacion']
     nuevo_vehiculo = Vehiculo(chapa=chapa, propietario=propietario, modelo=modelo, color=color, area=area, contacto=contacto, observacion=observacion)
-    db.session.add(nuevo_vehiculo)
-    db.session.commit()
-    return jsonify(success=True)
+    
+    try:
+        db.session.add(nuevo_vehiculo)
+        db.session.commit()
+        return jsonify(success=True)
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify(success=False, error='La chapa ya existe. Por favor, ingresa una chapa diferente.'), 400
 
 @app.route('/vehiculo/<int:id>', methods=['GET'])
 def obtener_vehiculo(id):

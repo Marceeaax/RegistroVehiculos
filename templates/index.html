@@ -85,7 +85,7 @@
                         <div class="form-group row">
                             <label for="propietario" class="col-sm-3 col-form-label">Propietario</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="propietario" name="propietario" pattern="[A-Za-z\s]+" title="Solo letras">
+                                <input type="text" class="form-control" id="propietario" name="propietario" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo puedes poner letras aqui">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -149,7 +149,7 @@
                         <div class="form-group row">
                             <label for="edit-propietario" class="col-sm-3 col-form-label">Propietario</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="edit-propietario" name="propietario" pattern="[A-Za-z\s]+" title="Solo letras">
+                                <input type="text" class="form-control" id="edit-propietario" name="propietario" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo letras, incluyendo ñ y acentos">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -199,6 +199,19 @@
         $(document).ready(function() {
             $('#toggleFilter').on('click', function() {
                 $('#filters').toggleClass('show');
+                $('#filters').find('input').val(''); // Limpiar los campos de filtro
+
+                if (!$('#filters').hasClass('show')) {
+                    // Si los filtros están ocultos, recargar la tabla de vehículos
+                    $.ajax({
+                        url: "{{ url_for('index') }}",
+                        method: 'GET',
+                        success: function(data) {
+                            var newTable = $(data).find('#vehiculos-table').html();
+                            $('#vehiculos-table').html(newTable);
+                        }
+                    });
+                }
             });
 
             $('#agregarForm').on('submit', function(event) {
@@ -208,29 +221,45 @@
                     method: 'POST',
                     data: $(this).serialize(),
                     success: function(data) {
-                        $('#agregarModal').modal('hide');
-                        setTimeout(function() {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Vehículo agregado',
-                                text: 'El vehículo ha sido agregado correctamente.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            }).then(() => {
-                                location.reload();
-                            });
-                        }, 500);
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 400) {
+                        if (data.success) {
+                            $('#agregarModal').modal('hide');
+                            setTimeout(function() {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Vehículo agregado',
+                                    text: 'El vehículo ha sido agregado correctamente.',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            }, 500);
+                        } else {
+                            $('#chapa').addClass('field-error'); // Añadir clase de error
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Error',
-                                text: 'La chapa ya existe. Por favor, ingresa una chapa diferente.',
+                                text: data.error,
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 400) {
+                            $('#chapa').addClass('field-error'); // Añadir clase de error
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: xhr.responseJSON.error,
                             });
                         }
                     }
                 });
+            });
+
+            // Remover la clase de error al cambiar el valor del campo
+            $('#chapa').on('input', function() {
+                $(this).removeClass('field-error');
+                this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
             });
 
             $('#editarModal').on('show.bs.modal', function(event) {
@@ -378,6 +407,15 @@
                         $('#vehiculos-table').html(newTable);
                     }
                 });
+            });
+
+            $('#agregarModal').on('hidden.bs.modal', function() {
+                $(this).find('form').trigger('reset');
+                $('#chapa').removeClass('field-error'); // Remover la clase de error si existe
+            });
+
+            $('#editarModal').on('hidden.bs.modal', function() {
+                $(this).find('form').trigger('reset');
             });
         });
     </script>
