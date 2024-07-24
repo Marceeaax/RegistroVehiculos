@@ -5,103 +5,125 @@
         "modelo": "Toyota Corolla",
         "color": "Rojo",
         "area": "Administracion",
-        "contacto": "0987123456"
+        "contacto": "0987123456",
+        "observacion": ""
     },
     {
-        "chapa": "DEF456",
+        "chapa": "BKN018",
+        "propietario": "Lujan Caceres",
+        "modelo": "Porshe Cayenne",
+        "color": "Azul",
+        "area": "TI",
+        "contacto": "0981493432",
+        "observacion": ""
+    },
+    {
+        "chapa": "DE5F456",
         "propietario": "Maria Lopez",
         "modelo": "Honda Civic",
         "color": "Azul",
         "area": "Contabilidad",
-        "contacto": "0987654321"
+        "contacto": "0987654321",
+        "observacion": ""
     },
     {
-        "chapa": "GHI789",
+        "chapa": "GHI1789",
         "propietario": "Carlos Ruiz",
         "modelo": "Ford Fiesta",
         "color": "Negro",
         "area": "Recursos Humanos",
-        "contacto": "0978123456"
+        "contacto": "0978123456",
+        "observacion": ""
     },
     {
-        "chapa": "JKL012",
+        "chapa": "JKL5012",
         "propietario": "Laura Martinez",
         "modelo": "Chevrolet Spark",
         "color": "Blanco",
         "area": "Marketing",
-        "contacto": "0978654321"
+        "contacto": "0978654321",
+        "observacion": ""
     },
     {
-        "chapa": "MNO345",
+        "chapa": "MN5O345",
         "propietario": "Pedro Gonzalez",
         "modelo": "Nissan Sentra",
         "color": "Gris",
         "area": "Ventas",
-        "contacto": "0968123456"
+        "contacto": "0968123456",
+        "observacion": ""
     },
     {
-        "chapa": "PQR678",
+        "chapa": "PQR5678",
         "propietario": "Ana Torres",
         "modelo": "Mazda 3",
         "color": "Verde",
         "area": "Logistica",
-        "contacto": "0968654321"
+        "contacto": "0968654321",
+        "observacion": ""
     },
     {
-        "chapa": "STU901",
+        "chapa": "STU5901",
         "propietario": "Jorge Diaz",
         "modelo": "Kia Rio",
         "color": "Amarillo",
         "area": "Produccion",
-        "contacto": "0958123456"
+        "contacto": "0958123456",
+        "observacion": ""
     },
     {
-        "chapa": "VWX234",
+        "chapa": "VW5X234",
         "propietario": "Sofia Romero",
         "modelo": "Hyundai Accent",
         "color": "Plateado",
         "area": "Compras",
-        "contacto": "0958654321"
+        "contacto": "0958654321",
+        "observacion": ""
     },
     {
-        "chapa": "YZA567",
+        "chapa": "Y5ZA567",
         "propietario": "Luis Fernandez",
         "modelo": "Volkswagen Golf",
         "color": "Azul",
         "area": "IT",
-        "contacto": "0948123456"
+        "contacto": "0948123456",
+        "observacion": ""
     },
     {
-        "chapa": "BCD890",
+        "chapa": "BCD4890",
         "propietario": "Gabriela Mendez",
         "modelo": "Renault Clio",
         "color": "Rojo",
         "area": "Calidad",
-        "contacto": "0948654321"
+        "contacto": "0948654321",
+        "observacion": ""
     },
     {
-        "chapa": "EFG123",
+        "chapa": "EFG2123",
         "propietario": "Miguel Vargas",
         "modelo": "Peugeot 208",
         "color": "Negro",
         "area": "Investigacion",
-        "contacto": "0938123456"
+        "contacto": "0938123456",
+        "observacion": ""
     },
     {
-        "chapa": "HIJ456",
+        "chapa": "HI32456",
         "propietario": "Diana Silva",
         "modelo": "Fiat Uno",
         "color": "Blanco",
         "area": "Desarrollo",
-        "contacto": "0938654321"
+        "contacto": "0938654321",
+        "observacion": ""
     },
     {
-        "chapa": "ABC123",
+        "chapa": "ADF293",
         "propietario": "Juan Perez",
         "modelo": "Toyota Corolla",
         "color": "Rojo",
         "area": "Administracion",
-        "contacto": "0987123456"
+        "contacto": "0987123456",
+        "observacion": ""
     },
     {
         "chapa": "DEF456",
@@ -109,7 +131,8 @@
         "modelo": "Honda Civic",
         "color": "Azul",
         "area": "Contabilidad",
-        "contacto": "0987654321"
+        "contacto": "0987654321",
+        "observacion": ""
     },
     {
         "chapa": "GHI789",
@@ -117,7 +140,8 @@
         "modelo": "Ford Fiesta",
         "color": "Negro",
         "area": "Recursos Humanos",
-        "contacto": "0978123456"
+        "contacto": "0978123456",
+        "observacion": ""
     },
     {
         "chapa": "JKL012",
@@ -125,7 +149,8 @@
         "modelo": "Chevrolet Spark",
         "color": "Blanco",
         "area": "Marketing",
-        "contacto": "0978654321"
+        "contacto": "0978654321",
+        "observacion": ""
     },
     {
         "chapa": "MNO345",
@@ -133,7 +158,8 @@
         "modelo": "Nissan Sentra",
         "color": "Gris",
         "area": "Ventas",
-        "contacto": "0968123456"
+        "contacto": "0968123456",
+        "observacion": ""
     },
     {
         "chapa": "PQR678",
@@ -141,7 +167,8 @@
         "modelo": "Mazda 3",
         "color": "Verde",
         "area": "Logistica",
-        "contacto": "0968654321"
+        "contacto": "0968654321",
+        "observacion": ""
     },
     {
         "chapa": "STU901",
@@ -149,7 +176,8 @@
         "modelo": "Kia Rio",
         "color": "Amarillo",
         "area": "Produccion",
-        "contacto": "0958123456"
+        "contacto": "0958123456",
+        "observacion": ""
     },
     {
         "chapa": "VWX234",
@@ -157,7 +185,8 @@
         "modelo": "Hyundai Accent",
         "color": "Plateado",
         "area": "Compras",
-        "contacto": "0958654321"
+        "contacto": "0958654321",
+        "observacion": ""
     },
     {
         "chapa": "YZA567",
@@ -165,7 +194,8 @@
         "modelo": "Volkswagen Golf",
         "color": "Azul",
         "area": "IT",
-        "contacto": "0948123456"
+        "contacto": "0948123456",
+        "observacion": ""
     },
     {
         "chapa": "BCD890",
@@ -173,7 +203,8 @@
         "modelo": "Renault Clio",
         "color": "Rojo",
         "area": "Calidad",
-        "contacto": "0948654321"
+        "contacto": "0948654321",
+        "observacion": ""
     },
     {
         "chapa": "EFG123",
@@ -181,7 +212,8 @@
         "modelo": "Peugeot 208",
         "color": "Negro",
         "area": "Investigacion",
-        "contacto": "0938123456"
+        "contacto": "0938123456",
+        "observacion": ""
     },
     {
         "chapa": "HIJ456",
@@ -189,7 +221,8 @@
         "modelo": "Fiat Uno",
         "color": "Blanco",
         "area": "Desarrollo",
-        "contacto": "0938654321"
+        "contacto": "0938654321",
+        "observacion": ""
     },
     {
         "chapa": "KLM789",
@@ -197,7 +230,8 @@
         "modelo": "Ford Focus",
         "color": "Gris",
         "area": "Marketing",
-        "contacto": "0928123456"
+        "contacto": "0928123456",
+        "observacion": ""
     },
     {
         "chapa": "NOP012",
@@ -205,7 +239,8 @@
         "modelo": "Chevrolet Cruze",
         "color": "Azul",
         "area": "Recursos Humanos",
-        "contacto": "0928654321"
+        "contacto": "0928654321",
+        "observacion": ""
     },
     {
         "chapa": "QRS345",
@@ -213,7 +248,8 @@
         "modelo": "Toyota Prius",
         "color": "Verde",
         "area": "Administracion",
-        "contacto": "0918123456"
+        "contacto": "0918123456",
+        "observacion": ""
     },
     {
         "chapa": "TUV678",
@@ -221,7 +257,8 @@
         "modelo": "Honda Accord",
         "color": "Negro",
         "area": "Contabilidad",
-        "contacto": "0918654321"
+        "contacto": "0918654321",
+        "observacion": ""
     },
     {
         "chapa": "WXY901",
@@ -229,7 +266,8 @@
         "modelo": "Nissan Altima",
         "color": "Plateado",
         "area": "Ventas",
-        "contacto": "0908123456"
+        "contacto": "0908123456",
+        "observacion": ""
     },
     {
         "chapa": "ZAB234",
@@ -237,7 +275,8 @@
         "modelo": "Mazda CX-5",
         "color": "Rojo",
         "area": "IT",
-        "contacto": "0908654321"
+        "contacto": "0908654321",
+        "observacion": ""
     },
     {
         "chapa": "CDE567",
@@ -245,7 +284,8 @@
         "modelo": "Kia Sportage",
         "color": "Blanco",
         "area": "Logistica",
-        "contacto": "0898123456"
+        "contacto": "0898123456",
+        "observacion": ""
     },
     {
         "chapa": "FGH890",
@@ -253,7 +293,8 @@
         "modelo": "Hyundai Elantra",
         "color": "Gris",
         "area": "Produccion",
-        "contacto": "0898654321"
+        "contacto": "0898654321",
+        "observacion": ""
     },
     {
         "chapa": "IJK123",
@@ -261,7 +302,8 @@
         "modelo": "Ford Escape",
         "color": "Azul",
         "area": "Compras",
-        "contacto": "0888123456"
+        "contacto": "0888123456",
+        "observacion": ""
     },
     {
         "chapa": "LMN456",
@@ -269,7 +311,8 @@
         "modelo": "Toyota RAV4",
         "color": "Verde",
         "area": "Calidad",
-        "contacto": "0888654321"
+        "contacto": "0888654321",
+        "observacion": ""
     },
     {
         "chapa": "OPQ789",
@@ -277,7 +320,8 @@
         "modelo": "Honda CR-V",
         "color": "Negro",
         "area": "Desarrollo",
-        "contacto": "0878123456"
+        "contacto": "0878123456",
+        "observacion": ""
     },
     {
         "chapa": "RST012",
@@ -285,7 +329,8 @@
         "modelo": "Chevrolet Traverse",
         "color": "Rojo",
         "area": "Investigacion",
-        "contacto": "0878654321"
+        "contacto": "0878654321",
+        "observacion": ""
     },
     {
         "chapa": "UVW345",
@@ -293,7 +338,8 @@
         "modelo": "Ford Explorer",
         "color": "Blanco",
         "area": "Administracion",
-        "contacto": "0868123456"
+        "contacto": "0868123456",
+        "observacion": ""
     },
     {
         "chapa": "XYZ678",
@@ -301,7 +347,8 @@
         "modelo": "Hyundai Tucson",
         "color": "Gris",
         "area": "Recursos Humanos",
-        "contacto": "0868654321"
+        "contacto": "0868654321",
+        "observacion": ""
     },
     {
         "chapa": "YZA910",
@@ -309,7 +356,8 @@
         "modelo": "Nissan Rogue",
         "color": "Plateado",
         "area": "Contabilidad",
-        "contacto": "0858123456"
+        "contacto": "0858123456",
+        "observacion": ""
     },
     {
         "chapa": "BCD234",
@@ -317,7 +365,8 @@
         "modelo": "Volkswagen Jetta",
         "color": "Negro",
         "area": "Ventas",
-        "contacto": "0858654321"
+        "contacto": "0858654321",
+        "observacion": ""
     },
     {
         "chapa": "EFG567",
@@ -325,7 +374,8 @@
         "modelo": "Renault Sandero",
         "color": "Rojo",
         "area": "Logistica",
-        "contacto": "0848123456"
+        "contacto": "0848123456",
+        "observacion": ""
     },
     {
         "chapa": "HIJ890",
@@ -333,6 +383,7 @@
         "modelo": "Fiat Palio",
         "color": "Azul",
         "area": "Produccion",
-        "contacto": "0848654321"
+        "contacto": "0848654321",
+        "observacion": ""
     }
 ]

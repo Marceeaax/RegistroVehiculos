@@ -1,4 +1,5 @@
 """
 - Definir bien los campos posible de area, que solamente sea un campo desplegable
 - En el HTML colocar Marca de Vehiculo
+- Acentos, no debe de interferir a la hora de filtrar
 """
