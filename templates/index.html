@@ -228,10 +228,7 @@
                         var tbody = $('#vehiculos-table');
                         tbody.empty();
 
-                        if (vehiculos.length === 0) {
-                            $('.no-results').show();
-                        } else {
-                            $('.no-results').hide();
+                        if (vehiculos.length > 0) {
                             vehiculos.forEach(function(vehiculo) {
                                 var tr = $('<tr>').attr('data-toggle', 'modal').attr('data-target', '#editarModal').attr('data-id', vehiculo.id);
                                 tr.append($('<td>').text(vehiculo.chapa || '-'));
@@ -243,6 +240,11 @@
                                 tr.append($('<td>').text(vehiculo.observacion || ''));
                                 tbody.append(tr);
                             });
+                        } else {
+                            var tr = $('<tr>');
+                            var td = $('<td>').attr('colspan', '7').addClass('text-center').text('No se encontraron coincidencias');
+                            tr.append(td);
+                            tbody.append(tr);
                         }
 
                         var pagination = $('#pagination');
