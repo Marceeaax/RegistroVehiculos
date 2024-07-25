@@ -6,14 +6,18 @@
     <title>Control de Vehículos</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h1 class="text-center mx-auto">Control de Vehículos</h1>
+            <div class="d-flex align-items-center">
+                <img src="{{ url_for('static', filename='images/INE.png') }}" alt="INE Logo" class="logo mr-3 img-fluid" style="width: 270px;">
+                <h2 class="text mt-auto" style="margin-left: 110px;">CONTROL DE VEHÍCULOS</h2>
+            </div>
             <div>
-                <button class="btn btn-secondary" id="toggleFilter">Filtrar</button>
+                <button class="btn btn-secondary" id="toggleFilter" style="margin-left: 20px;">Filtrar</button>
                 <button class="btn btn-primary" data-toggle="modal" data-target="#agregarModal">Agregar Vehículo</button>
             </div>
         </div>
@@ -28,7 +32,7 @@
         </div>
 
         <div class="table-responsive">
-            <table class="table table-hover table-bordered rounded">
+            <table class="table table-hover table-striped">
                 <thead class="thead-dark">
                     <tr>
                         <th>Chapa</th>
@@ -43,22 +47,23 @@
                 <tbody id="vehiculos-table">
                     {% for vehiculo in vehiculos %}
                         <tr data-toggle="modal" data-target="#editarModal" data-id="{{ vehiculo.id }}">
-                            <td>{{ vehiculo.chapa }}</td>
-                            <td>{{ vehiculo.propietario }}</td>
-                            <td>{{ vehiculo.modelo }}</td>
-                            <td>{{ vehiculo.color }}</td>
-                            <td>{{ vehiculo.area }}</td>
-                            <td>{{ vehiculo.contacto }}</td>
+                            <td>{{ vehiculo.chapa or '-' }}</td>
+                            <td>{{ vehiculo.propietario or '-' }}</td>
+                            <td>{{ vehiculo.modelo or '-' }}</td>
+                            <td>{{ vehiculo.color or '-' }}</td>
+                            <td>{{ vehiculo.area or '-' }}</td>
+                            <td>{{ vehiculo.contacto or '-' }}</td>
                             <td>{{ vehiculo.observacion or '' }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
+            <div class="no-results" style="display: none;">No se encontraron coincidencias.</div>
         </div>
         <div class="pagination-container">
-            <div class="pagination justify-content-end">
+            <div class="pagination justify-content-end" id="pagination">
                 {% for page_num in pages %}
-                    <a href="{{ url_for('index', page=page_num) }}" class="page-link {% if page_num == current_page %}active{% endif %}">{{ page_num }}</a>
+                    <a href="#" class="page-link {% if page_num == current_page %}active{% endif %}" data-page="{{ page_num }}">{{ page_num }}</a>
                 {% endfor %}
             </div>
         </div>
@@ -85,7 +90,7 @@
                         <div class="form-group row">
                             <label for="propietario" class="col-sm-3 col-form-label">Propietario</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="propietario" name="propietario" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo puedes poner letras aqui">
+                                <input type="text" class="form-control" id="propietario" name="propietario" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo puedes poner letras aqui" oninput="this.value = this.value.replace(/[^A-Za-zñÑáéíóúÁÉÍÓÚ\s]/g, '')" >
                             </div>
                         </div>
                         <div class="form-group row">
@@ -97,7 +102,7 @@
                         <div class="form-group row">
                             <label for="color" class="col-sm-3 col-form-label">Color</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control capitalize" id="color" name="color">
+                                <input type="text" class="form-control capitalize" id="color" name="color" pattern="[A-Za-z\s]+" title="Solo letras" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -149,7 +154,7 @@
                         <div class="form-group row">
                             <label for="edit-propietario" class="col-sm-3 col-form-label">Propietario</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="edit-propietario" name="propietario" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo letras, incluyendo ñ y acentos">
+                                <input type="text" class="form-control" id="edit-propietario" name="propietario" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo letras, incluyendo ñ y acentos" oninput="this.value = this.value.replace(/[^A-Za-zñÑáéíóúÁÉÍÓÚ\s]/g, '')" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -161,7 +166,7 @@
                         <div class="form-group row">
                             <label for="edit-color" class="col-sm-3 col-form-label">Color</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control capitalize" id="edit-color" pattern="[A-Za-z\s]+" title="Solo letras" name="color">
+                                <input type="text" class="form-control capitalize" id="edit-color" name="color" pattern="[A-Za-z\s]+" title="Solo letras" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -197,20 +202,85 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function() {
+            function loadVehiculos(page = 1) {
+                var chapa = $('#filter-chapa').val();
+                var propietario = $('#filter-propietario').val();
+                var modelo = $('#filter-modelo').val();
+                var color = $('#filter-color').val();
+                var area = $('#filter-area').val();
+
+                console.log("Cargando vehículos para la página:", page);
+
+                $.ajax({
+                    url: "{{ url_for('index') }}",
+                    method: 'GET',
+                    data: {
+                        chapa: chapa,
+                        propietario: propietario,
+                        modelo: modelo,
+                        color: color,
+                        area: area,
+                        page: page
+                    },
+                    success: function(data) {
+                        console.log("Datos recibidos:", data);
+                        var vehiculos = data.vehiculos;
+                        var tbody = $('#vehiculos-table');
+                        tbody.empty();
+
+                        if (vehiculos.length === 0) {
+                            $('.no-results').show();
+                        } else {
+                            $('.no-results').hide();
+                            vehiculos.forEach(function(vehiculo) {
+                                var tr = $('<tr>').attr('data-toggle', 'modal').attr('data-target', '#editarModal').attr('data-id', vehiculo.id);
+                                tr.append($('<td>').text(vehiculo.chapa || '-'));
+                                tr.append($('<td>').text(vehiculo.propietario || '-'));
+                                tr.append($('<td>').text(vehiculo.modelo || '-'));
+                                tr.append($('<td>').text(vehiculo.color || '-'));
+                                tr.append($('<td>').text(vehiculo.area || '-'));
+                                tr.append($('<td>').text(vehiculo.contacto || '-'));
+                                tr.append($('<td>').text(vehiculo.observacion || ''));
+                                tbody.append(tr);
+                            });
+                        }
+
+                        var pagination = $('#pagination');
+                        pagination.empty();
+
+                        for (var i = 1; i <= data.pages; i++) {
+                            var a = $('<a>').attr('href', '#').addClass('page-link').text(i).attr('data-page', i);
+                            if (i === data.current_page) {
+                                a.addClass('active');
+                            }
+                            pagination.append(a);
+                        }
+
+                        // Actualizar manejadores de eventos de paginación
+                        updatePaginationHandlers();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error al cargar los vehículos:", error);
+                    }
+                });
+            }
+
+            function updatePaginationHandlers() {
+                console.log("Actualizando manejadores de paginación");
+                $('#pagination .page-link').off('click').on('click', function(event) {
+                    event.preventDefault();
+                    var page = $(this).data('page');
+                    console.log("Página clickeada:", page);
+                    loadVehiculos(page);
+                });
+            }
+
             $('#toggleFilter').on('click', function() {
                 $('#filters').toggleClass('show');
                 $('#filters').find('input').val(''); // Limpiar los campos de filtro
 
                 if (!$('#filters').hasClass('show')) {
-                    // Si los filtros están ocultos, recargar la tabla de vehículos
-                    $.ajax({
-                        url: "{{ url_for('index') }}",
-                        method: 'GET',
-                        success: function(data) {
-                            var newTable = $(data).find('#vehiculos-table').html();
-                            $('#vehiculos-table').html(newTable);
-                        }
-                    });
+                    loadVehiculos();
                 }
             });
 
@@ -223,17 +293,15 @@
                     success: function(data) {
                         if (data.success) {
                             $('#agregarModal').modal('hide');
-                            setTimeout(function() {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Vehículo agregado',
-                                    text: 'El vehículo ha sido agregado correctamente.',
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                }).then(() => {
-                                    location.reload();
-                                });
-                            }, 500);
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Vehículo agregado',
+                                text: 'El vehículo ha sido agregado correctamente.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(() => {
+                                loadVehiculos();
+                            });
                         } else {
                             $('#chapa').addClass('field-error'); // Añadir clase de error
                             Swal.fire({
@@ -290,17 +358,15 @@
                     data: $(this).serialize(),
                     success: function(data) {
                         $('#editarModal').modal('hide');
-                        setTimeout(function() {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Vehículo editado',
-                                text: 'El vehículo ha sido editado correctamente.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            }).then(() => {
-                                location.reload();
-                            });
-                        }, 500);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Vehículo editado',
+                            text: 'El vehículo ha sido editado correctamente.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            loadVehiculos();
+                        });
                     },
                     error: function(xhr) {
                         if (xhr.status === 400) {
@@ -331,24 +397,22 @@
                             method: 'GET',
                             success: function(data) {
                                 $('#editarModal').modal('hide');
-                                setTimeout(function() {
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Vehículo eliminado',
-                                        text: 'El vehículo ha sido eliminado correctamente.',
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    }).then(() => {
-                                        location.reload();
-                                    });
-                                }, 500);
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Vehículo eliminado',
+                                    text: 'El vehículo ha sido eliminado correctamente.',
+                                    showConfirmButton: false,
+                                    timer: 850
+                                }).then(() => {
+                                    loadVehiculos();
+                                });
                             }
                         });
                     }
                 });
             });
 
-            $('tbody tr').css('cursor', 'pointer').on('click', function() {
+            $('tbody').on('click', 'tr', function() {
                 var id = $(this).data('id');
                 $('#editarModal').modal('show');
                 $.ajax({
@@ -386,27 +450,7 @@
 
             // Filtros
             $('#filter-chapa, #filter-propietario, #filter-modelo, #filter-color, #filter-area').on('input', function() {
-                var chapa = $('#filter-chapa').val();
-                var propietario = $('#filter-propietario').val();
-                var modelo = $('#filter-modelo').val();
-                var color = $('#filter-color').val();
-                var area = $('#filter-area').val();
-
-                $.ajax({
-                    url: "{{ url_for('index') }}",
-                    method: 'GET',
-                    data: {
-                        chapa: chapa,
-                        propietario: propietario,
-                        modelo: modelo,
-                        color: color,
-                        area: area
-                    },
-                    success: function(data) {
-                        var newTable = $(data).find('#vehiculos-table').html();
-                        $('#vehiculos-table').html(newTable);
-                    }
-                });
+                loadVehiculos();
             });
 
             $('#agregarModal').on('hidden.bs.modal', function() {
@@ -417,7 +461,13 @@
             $('#editarModal').on('hidden.bs.modal', function() {
                 $(this).find('form').trigger('reset');
             });
+
+            // Cargar la primera página de vehículos al iniciar
+            loadVehiculos();
+
+            updatePaginationHandlers();
         });
+
     </script>
 </body>
 </html>

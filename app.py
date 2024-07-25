@@ -1,4 +1,5 @@
 import os
+import re
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
@@ -21,6 +22,7 @@ class Vehiculo(db.Model):
 @app.route('/')
 @app.route('/<int:page>')
 def index(page=1):
+    page = request.args.get('page', page, type=int)
     per_page = 7
     filters = []
     chapa = request.args.get('chapa')
@@ -42,6 +44,25 @@ def index(page=1):
     
     vehiculos = Vehiculo.query.filter(*filters).paginate(page=page, per_page=per_page, error_out=False)
     total_pages = vehiculos.pages
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return jsonify({
+            'vehiculos': [
+                {
+                    'id': v.id,
+                    'chapa': v.chapa,
+                    'propietario': v.propietario,
+                    'modelo': v.modelo,
+                    'color': v.color,
+                    'area': v.area,
+                    'contacto': v.contacto,
+                    'observacion': v.observacion
+                } for v in vehiculos.items
+            ],
+            'pages': total_pages,
+            'current_page': page
+        })
+
     return render_template('index.html', vehiculos=vehiculos.items, pages=range(1, total_pages + 1), current_page=page)
 
 @app.route('/agregar', methods=['POST'])
@@ -49,7 +70,9 @@ def agregar():
     chapa = request.form['chapa']
     propietario = request.form['propietario']
     modelo = request.form['modelo']
+    modelo = re.sub(r'\b[a-z]', lambda match: match.group().upper(), modelo)
     color = request.form['color']
+    color = color.capitalize()
     area = request.form['area']
     contacto = request.form['contacto']
     observacion = request.form['observacion']
@@ -78,8 +101,12 @@ def editar(id):
     vehiculo.area = request.form['area']
     vehiculo.contacto = request.form['contacto']
     vehiculo.observacion = request.form['observacion']
-    db.session.commit()
-    return jsonify(success=True)
+    try:
+        db.session.commit()
+        return jsonify(success=True)
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify(success=False, error='La chapa ya existe. Por favor, ingresa una chapa diferente.'), 400
 
 @app.route('/eliminar/<int:id>')
 def eliminar(id):
