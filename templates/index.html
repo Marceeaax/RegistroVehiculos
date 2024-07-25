@@ -201,13 +201,18 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
+        function normalizeString(str) {
+    // Normaliza la cadena y elimina los caracteres de combinación Unicode, excepto "ñ" y "Ñ"
+            return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ñ/g, 'n').replace(/Ñ/g, 'N').replace(/n/g, 'ñ').replace(/N/g, 'Ñ');
+        }
+
         $(document).ready(function() {
             function loadVehiculos(page = 1) {
-                var chapa = $('#filter-chapa').val();
-                var propietario = $('#filter-propietario').val();
-                var modelo = $('#filter-modelo').val();
-                var color = $('#filter-color').val();
-                var area = $('#filter-area').val();
+                var chapa = normalizeString($('#filter-chapa').val());
+                var propietario = normalizeString($('#filter-propietario').val());
+                var modelo = normalizeString($('#filter-modelo').val());
+                var color = normalizeString($('#filter-color').val());
+                var area = normalizeString($('#filter-area').val());
 
                 console.log("Cargando vehículos para la página:", page);
 
@@ -362,8 +367,8 @@
                         $('#editarModal').modal('hide');
                         Swal.fire({
                             icon: 'success',
-                            title: 'Vehículo editado',
-                            text: 'El vehículo ha sido editado correctamente.',
+                            title: 'Datos editados',
+                            text: 'Los datos han sido editados correctamente.',
                             showConfirmButton: false,
                             timer: 1500
                         }).then(() => {

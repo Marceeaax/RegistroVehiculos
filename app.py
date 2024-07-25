@@ -4,10 +4,29 @@ import re
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.sql.expression import func
 
 def remove_accents(input_str):
-    nfkd_form = unicodedata.normalize('NFKD', input_str)
-    return u"".join([c for c in nfkd_form if not unicodedata.combining(c)])
+    if isinstance(input_str, str):
+        nfkd_form = unicodedata.normalize('NFKD', input_str)
+        return u"".join([c for c in nfkd_form if not unicodedata.combining(c)])
+    return input_str
+
+def normalize_column(column):
+    column = func.replace(column, 'á', 'a')
+    column = func.replace(column, 'Á', 'A')
+    column = func.replace(column, 'é', 'e')
+    column = func.replace(column, 'É', 'E')
+    column = func.replace(column, 'í', 'i')
+    column = func.replace(column, 'Í', 'I')
+    column = func.replace(column, 'ó', 'o')
+    column = func.replace(column, 'Ó', 'O')
+    column = func.replace(column, 'ú', 'u')
+    column = func.replace(column, 'Ú', 'U')
+    column = func.replace(column, 'ñ', 'n')
+    column = func.replace(column, 'Ñ', 'N')
+    column = func.lower(column)
+    return column
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///vehiculos.db'
@@ -37,15 +56,20 @@ def index(page=1):
     area = request.args.get('area')
     
     if chapa:
-        filters.append(Vehiculo.chapa.like(f'%{chapa}%'))
+        chapa = remove_accents(chapa).lower()
+        filters.append(normalize_column(Vehiculo.chapa).like(f'%{chapa}%'))
     if propietario:
-        filters.append(Vehiculo.propietario.like(f'%{propietario}%'))
+        propietario = remove_accents(propietario).lower()
+        filters.append(normalize_column(Vehiculo.propietario).like(f'%{propietario}%'))
     if modelo:
-        filters.append(Vehiculo.modelo.like(f'%{modelo}%'))
+        modelo = remove_accents(modelo).lower()
+        filters.append(normalize_column(Vehiculo.modelo).like(f'%{modelo}%'))
     if color:
-        filters.append(Vehiculo.color.like(f'%{color}%'))
+        color = remove_accents(color).lower()
+        filters.append(normalize_column(Vehiculo.color).like(f'%{color}%'))
     if area:
-        filters.append(Vehiculo.area.like(f'%{area}%'))
+        area = remove_accents(area).lower()
+        filters.append(normalize_column(Vehiculo.area).like(f'%{area}%'))
     
     vehiculos = Vehiculo.query.filter(*filters).paginate(page=page, per_page=per_page, error_out=False)
     total_pages = vehiculos.pages
