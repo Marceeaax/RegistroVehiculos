@@ -28,6 +28,11 @@ def normalize_column(column):
     column = func.lower(column)
     return column
 
+def is_mobile(user_agent):
+    mobile_browsers = ["iphone", "android", "blackberry", "nokia", "opera mini", "windows mobile", "windows phone", "iemobile"]
+    user_agent = user_agent.lower()
+    return any(mobile_browser in user_agent for mobile_browser in mobile_browsers)
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///vehiculos.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -46,6 +51,11 @@ class Vehiculo(db.Model):
 @app.route('/')
 @app.route('/<int:page>')
 def index(page=1):
+    user_agent = request.headers.get('User-Agent')
+    with open('useragent.txt', 'w') as file:
+        file.write(user_agent)
+    template = 'index_mobile.html' if is_mobile(user_agent) else 'index.html'
+
     page = request.args.get('page', page, type=int)
     per_page = 7
     filters = []
@@ -92,7 +102,7 @@ def index(page=1):
             'current_page': page
         })
 
-    return render_template('index.html', vehiculos=vehiculos.items, pages=range(1, total_pages + 1), current_page=page)
+    return render_template(template, vehiculos=vehiculos.items, pages=range(1, total_pages + 1), current_page=page)
 
 @app.route('/agregar', methods=['POST'])
 def agregar():
@@ -148,4 +158,14 @@ if __name__ == '__main__':
     if not os.path.exists('vehiculos.db'):
         with app.app_context():
             db.create_all()
+    
+    # ENTORNO DE PRODUCCION (HACER PIP INSTALL WAITRESS)
+    from waitress import serve
+    serve(app, host='0.0.0.0', port=8080)
+    
+    
+    """
+    # ENTORNO DE DESARROLLO
     app.run(debug=True)
+    
+    """
