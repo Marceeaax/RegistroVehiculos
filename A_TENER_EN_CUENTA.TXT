@@ -1,6 +1,7 @@
 """
 - Definir bien los campos posible de area, que solamente sea un campo desplegable
 - En el HTML colocar Marca de Vehiculo
+- Ver si seria buena idea separar Marca y modelo en la tabla, para mayor atomicidad
 - Escribir tests para la aplicacion con pytest y FlaskTesting
 - Aplicar el algoritmo de distancia de Levenshtein para prevenir errores a la hora de cargar los datos
 (Por ejemplo, alguien puede cargar "Mitsubichi" en lugar de Mitsubishi)
