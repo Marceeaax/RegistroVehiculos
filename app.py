@@ -1,6 +1,7 @@
 import unicodedata
 import os
 import re
+from datetime import datetime
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
@@ -36,6 +37,22 @@ def es_movil(user_agent):
     user_agent = user_agent.lower()
     return any(navegador_movil in user_agent for navegador_movil in navegadores_moviles)
 
+# Función para detectar el sistema operativo del usuario
+def obtener_sistema_operativo(user_agent):
+    user_agent = user_agent.lower()
+    if 'windows' in user_agent:
+        return 'Windows'
+    elif 'android' in user_agent:
+        return 'Android'
+    elif 'iphone' in user_agent or 'ipad' in user_agent:
+        return 'iOS'
+    elif 'mac' in user_agent:
+        return 'MacOS'
+    elif 'linux' in user_agent:
+        return 'Linux'
+    else:
+        return 'Otro'
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///vehiculos.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -51,6 +68,7 @@ class Vehiculo(db.Model):
     area = db.Column(db.String(15), nullable=False)
     contacto = db.Column(db.String(15), nullable=False)
     observacion = db.Column(db.String(30), nullable=True)
+    # moto = db.Column(db.Boolean, default=False) Falta implementar condicionales 
 
 # Middleware para registrar las IPs
 class LogIPMiddleware:
@@ -59,7 +77,20 @@ class LogIPMiddleware:
 
     def __call__(self, environ, start_response):
         ip = environ.get('REMOTE_ADDR')
-        print(f'IP conectado: {ip}')
+        method = environ.get('REQUEST_METHOD')
+        path = environ.get('PATH_INFO')
+        user_agent = environ.get('HTTP_USER_AGENT', '')
+        os_type = obtener_sistema_operativo(user_agent)
+        now = datetime.now().strftime('%H:%M %d/%m/%Y')
+        log_message = f'IP "{ip}" realizó una solicitud {method} a la ruta {path} usando {os_type} a las {now}'
+        
+        # Imprimir en la consola
+        print(log_message)
+        
+        # Registrar en un archivo de texto
+        with open("access.log", "a") as log_file:
+            log_file.write(log_message + "\n")
+        
         return self.app(environ, start_response)
 
 app.wsgi_app = LogIPMiddleware(app.wsgi_app)
@@ -182,7 +213,6 @@ if __name__ == '__main__':
     
     from waitress import serve
     serve(app, host='0.0.0.0', port=8080)
-    
     
     """ # ENTORNO DE DESARROLLO
     app.run(debug=True) """
