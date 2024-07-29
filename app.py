@@ -52,6 +52,18 @@ class Vehiculo(db.Model):
     contacto = db.Column(db.String(15), nullable=False)
     observacion = db.Column(db.String(30), nullable=True)
 
+# Middleware para registrar las IPs
+class LogIPMiddleware:
+    def __init__(self, app):
+        self.app = app
+
+    def __call__(self, environ, start_response):
+        ip = environ.get('REMOTE_ADDR')
+        print(f'IP conectado: {ip}')
+        return self.app(environ, start_response)
+
+app.wsgi_app = LogIPMiddleware(app.wsgi_app)
+
 # Ruta para la página principal
 @app.route('/')
 @app.route('/<int:page>')
@@ -167,10 +179,10 @@ if __name__ == '__main__':
             db.create_all()
     
     # ENTORNO DE PRODUCCIÓN (HACER PIP INSTALL WAITRESS)
+    
     from waitress import serve
     serve(app, host='0.0.0.0', port=8080)
     
-    """
-    # ENTORNO DE DESARROLLO
-    app.run(debug=True)
-    """
+    
+    """ # ENTORNO DE DESARROLLO
+    app.run(debug=True) """
