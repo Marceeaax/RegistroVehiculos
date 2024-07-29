@@ -6,13 +6,15 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.sql.expression import func
 
-def remove_accents(input_str):
+# Función para eliminar acentos de una cadena de texto
+def eliminar_acentos(input_str):
     if isinstance(input_str, str):
         nfkd_form = unicodedata.normalize('NFKD', input_str)
         return u"".join([c for c in nfkd_form if not unicodedata.combining(c)])
     return input_str
 
-def normalize_column(column):
+# Función para normalizar las columnas de la base de datos reemplazando caracteres acentuados
+def normalizar_columna(column):
     column = func.replace(column, 'á', 'a')
     column = func.replace(column, 'Á', 'A')
     column = func.replace(column, 'é', 'e')
@@ -28,19 +30,21 @@ def normalize_column(column):
     column = func.lower(column)
     return column
 
-def is_mobile(user_agent):
-    mobile_browsers = ["iphone", "android", "blackberry", "nokia", "opera mini", "windows mobile", "windows phone", "iemobile"]
+# Función para detectar si el usuario está utilizando un dispositivo móvil
+def es_movil(user_agent):
+    navegadores_moviles = ["iphone", "android", "blackberry", "nokia", "opera mini", "windows mobile", "windows phone", "iemobile"]
     user_agent = user_agent.lower()
-    return any(mobile_browser in user_agent for mobile_browser in mobile_browsers)
+    return any(navegador_movil in user_agent for navegador_movil in navegadores_moviles)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///vehiculos.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+# Definición del modelo Vehiculo
 class Vehiculo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    chapa = db.Column(db.String(10), nullable=False, unique=True)
+    chapa = db.Column(db.String(7), nullable=False, unique=True)
     propietario = db.Column(db.String(30), nullable=False)
     modelo = db.Column(db.String(20), nullable=False)
     color = db.Column(db.String(10), nullable=False)
@@ -48,13 +52,12 @@ class Vehiculo(db.Model):
     contacto = db.Column(db.String(15), nullable=False)
     observacion = db.Column(db.String(30), nullable=True)
 
+# Ruta para la página principal
 @app.route('/')
 @app.route('/<int:page>')
 def index(page=1):
     user_agent = request.headers.get('User-Agent')
-    with open('useragent.txt', 'w') as file:
-        file.write(user_agent)
-    template = 'index_mobile.html' if is_mobile(user_agent) else 'index.html'
+    template = 'index_mobile.html' if es_movil(user_agent) else 'index.html'
 
     page = request.args.get('page', page, type=int)
     per_page = 7
@@ -66,20 +69,20 @@ def index(page=1):
     area = request.args.get('area')
     
     if chapa:
-        chapa = remove_accents(chapa).lower()
-        filters.append(normalize_column(Vehiculo.chapa).like(f'%{chapa}%'))
+        chapa = eliminar_acentos(chapa).lower()
+        filters.append(normalizar_columna(Vehiculo.chapa).like(f'%{chapa}%'))
     if propietario:
-        propietario = remove_accents(propietario).lower()
-        filters.append(normalize_column(Vehiculo.propietario).like(f'%{propietario}%'))
+        propietario = eliminar_acentos(propietario).lower()
+        filters.append(normalizar_columna(Vehiculo.propietario).like(f'%{propietario}%'))
     if modelo:
-        modelo = remove_accents(modelo).lower()
-        filters.append(normalize_column(Vehiculo.modelo).like(f'%{modelo}%'))
+        modelo = eliminar_acentos(modelo).lower()
+        filters.append(normalizar_columna(Vehiculo.modelo).like(f'%{modelo}%'))
     if color:
-        color = remove_accents(color).lower()
-        filters.append(normalize_column(Vehiculo.color).like(f'%{color}%'))
+        color = eliminar_acentos(color).lower()
+        filters.append(normalizar_columna(Vehiculo.color).like(f'%{color}%'))
     if area:
-        area = remove_accents(area).lower()
-        filters.append(normalize_column(Vehiculo.area).like(f'%{area}%'))
+        area = eliminar_acentos(area).lower()
+        filters.append(normalizar_columna(Vehiculo.area).like(f'%{area}%'))
     
     vehiculos = Vehiculo.query.filter(*filters).paginate(page=page, per_page=per_page, error_out=False)
     total_pages = vehiculos.pages
@@ -104,6 +107,7 @@ def index(page=1):
 
     return render_template(template, vehiculos=vehiculos.items, pages=range(1, total_pages + 1), current_page=page)
 
+# Ruta para agregar un nuevo vehículo
 @app.route('/agregar', methods=['POST'])
 def agregar():
     chapa = request.form['chapa']
@@ -125,11 +129,13 @@ def agregar():
         db.session.rollback()
         return jsonify(success=False, error='La chapa ya existe. Por favor, ingresa una chapa diferente.'), 400
 
+# Ruta para obtener la información de un vehículo específico
 @app.route('/vehiculo/<int:id>', methods=['GET'])
 def obtener_vehiculo(id):
     vehiculo = Vehiculo.query.get_or_404(id)
     return jsonify(id=vehiculo.id, chapa=vehiculo.chapa, propietario=vehiculo.propietario, modelo=vehiculo.modelo, color=vehiculo.color, area=vehiculo.area, contacto=vehiculo.contacto, observacion=vehiculo.observacion)
 
+# Ruta para editar la información de un vehículo existente
 @app.route('/editar/<int:id>', methods=['POST'])
 def editar(id):
     vehiculo = Vehiculo.query.get_or_404(id)
@@ -147,6 +153,7 @@ def editar(id):
         db.session.rollback()
         return jsonify(success=False, error='La chapa ya existe. Por favor, ingresa una chapa diferente.'), 400
 
+# Ruta para eliminar un vehículo
 @app.route('/eliminar/<int:id>')
 def eliminar(id):
     vehiculo = Vehiculo.query.get_or_404(id)
@@ -159,13 +166,11 @@ if __name__ == '__main__':
         with app.app_context():
             db.create_all()
     
-    # ENTORNO DE PRODUCCION (HACER PIP INSTALL WAITRESS)
+    # ENTORNO DE PRODUCCIÓN (HACER PIP INSTALL WAITRESS)
     from waitress import serve
     serve(app, host='0.0.0.0', port=8080)
-    
     
     """
     # ENTORNO DE DESARROLLO
     app.run(debug=True)
-    
     """
