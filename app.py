@@ -7,6 +7,14 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.sql.expression import func
 
+# Variable global para las áreas
+areas = [
+    "Encuestas (DED)", "Informatica", "Codificacion", "Logistica",
+    "Cartografia", "Talentos Humanos (DTH)", "Segmentacion", "Movilidad",
+    "Pre-Critica", "Viaticos", "Direccion Administrativa", "Transporte",
+    "DESD", "DEE", "Digitacion", "Combustibles", "Central", "Servicios", "Reclutamiento", "EPH"
+]
+
 # Función para eliminar acentos de una cadena de texto
 def eliminar_acentos(input_str):
     if isinstance(input_str, str):
@@ -148,7 +156,7 @@ def index(page=1):
             'current_page': page
         })
 
-    return render_template(template, vehiculos=vehiculos.items, pages=range(1, total_pages + 1), current_page=page)
+    return render_template(template, vehiculos=vehiculos.items, pages=range(1, total_pages + 1), current_page=page, areas=areas)
 
 # Ruta para agregar un nuevo vehículo
 @app.route('/agregar', methods=['POST'])

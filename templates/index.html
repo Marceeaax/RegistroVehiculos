@@ -30,7 +30,12 @@
             <input type="text" id="filter-propietario" class="form-control mr-2" placeholder="Filtrar por propietario">
             <input type="text" id="filter-modelo" class="form-control mr-2" placeholder="Filtrar por modelo">
             <input type="text" id="filter-color" class="form-control mr-2" placeholder="Filtrar por color">
-            <input type="text" id="filter-area" class="form-control" placeholder="Filtrar por área">
+            <select id="filter-area" class="form-control" placeholder="Filtrar por área">
+                <option value="" selected disabled>Filtrar por área</option>
+                {% for area in areas %}
+                    <option value="{{ area }}">{{ area }}</option>
+                {% endfor %}
+            </select>
         </div>
 
         <div class="table-responsive">
@@ -42,7 +47,7 @@
                         <th>Modelo</th>
                         <th>Color</th>
                         <th>Área</th>
-                        <th>Contacto</th>
+                        <th>Telefono</th>
                         <th>Observación</th>
                     </tr>
                 </thead>
@@ -116,11 +121,15 @@
                         <div class="form-group row">
                             <label for="area" class="col-sm-3 col-form-label">Área</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control capitalize" id="area" name="area" required>
+                                <select class="form-control custom-select" id="area" name="area" required>
+                                    {% for area in areas %}
+                                        <option value="{{ area }}">{{ area }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
-                        </div>
+                        </div>                        
                         <div class="form-group row">
-                            <label for="contacto" class="col-sm-3 col-form-label">Contacto</label>
+                            <label for="contacto" class="col-sm-3 col-form-label">Telefono</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="contacto" name="contacto" pattern="\d+" title="Solo números">
                             </div>
@@ -180,11 +189,15 @@
                         <div class="form-group row">
                             <label for="edit-area" class="col-sm-3 col-form-label">Área</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control capitalize" id="edit-area" name="area" required>
+                                <select class="form-control custom-select" id="edit-area" name="area" required>
+                                    {% for area in areas %}
+                                        <option value="{{ area }}">{{ area }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
-                        </div>
+                        </div>                        
                         <div class="form-group row">
-                            <label for="edit-contacto" class="col-sm-3 col-form-label">Contacto</label>
+                            <label for="edit-contacto" class="col-sm-3 col-form-label">Telefono</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="edit-contacto" name="contacto" pattern="\d+" title="Solo números">
                             </div>
@@ -213,22 +226,22 @@
             // Normaliza la cadena y elimina los caracteres de combinación Unicode, excepto "ñ" y "Ñ"
             return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ñ/g, 'n').replace(/Ñ/g, 'N').replace(/n/g, 'ñ').replace(/N/g, 'Ñ');
         }
-
+    
         $(document).ready(function() {
             function loadVehiculos(page = 1) {
                 var chapa = normalizeString($('#filter-chapa').val());
                 var propietario = normalizeString($('#filter-propietario').val());
                 var modelo = normalizeString($('#filter-modelo').val());
                 var color = normalizeString($('#filter-color').val());
-                var area = normalizeString($('#filter-area').val());
-
+                var area = $('#filter-area').val();
+    
                 console.log("Cargando vehículos para la página:", page);
-
+    
                 var tbody = $('#vehiculos-table');
-
+    
                 // Añadir clase fade-out antes de cargar nuevos datos
                 tbody.addClass('fade-out');
-
+    
                 // Esperar a que termine la animación de fade-out antes de cargar los datos
                 setTimeout(function() {
                     $.ajax({
@@ -245,10 +258,10 @@
                         success: function(data) {
                             console.log("Datos recibidos:", data);
                             var vehiculos = data.vehiculos;
-
+    
                             tbody.empty();
                             tbody.removeClass('fade-out').addClass('hidden'); // Asegurarse de que esté oculto antes del fade-in
-
+    
                             if (vehiculos.length > 0) {
                                 vehiculos.forEach(function(vehiculo) {
                                     var tr = $('<tr>').attr('data-toggle', 'modal').attr('data-target', '#editarModal').attr('data-id', vehiculo.id);
@@ -267,10 +280,10 @@
                                 tr.append(td);
                                 tbody.append(tr);
                             }
-
+    
                             var pagination = $('#pagination');
                             pagination.empty();
-
+    
                             for (var i = 1; i <= data.pages; i++) {
                                 var a = $('<a>').attr('href', '#').addClass('page-link').text(i).attr('data-page', i);
                                 if (i === data.current_page) {
@@ -278,13 +291,13 @@
                                 }
                                 pagination.append(a);
                             }
-
+    
                             // Actualizar manejadores de eventos de paginación
                             updatePaginationHandlers();
-
+    
                             // Añadir clase fade-in para mostrar los nuevos datos
                             tbody.removeClass('hidden').addClass('fade-in');
-
+    
                             // Eliminar la clase fade-in después de la animación
                             setTimeout(function() {
                                 tbody.removeClass('fade-in');
@@ -296,7 +309,7 @@
                     });
                 }, 200); // Esperar 0.3s para la animación de fade-out
             }
-
+    
             function updatePaginationHandlers() {
                 console.log("Actualizando manejadores de paginación");
                 $('#pagination .page-link').off('click').on('click', function(event) {
@@ -306,16 +319,17 @@
                     loadVehiculos(page);
                 });
             }
-
+    
             $('#toggleFilter').on('click', function() {
                 $('#filters').toggleClass('show');
                 $('#filters').find('input').val(''); // Limpiar los campos de filtro
-
+                $('#filters').find('select').val(''); // Limpiar el campo de filtro de área
+    
                 if (!$('#filters').hasClass('show')) {
                     loadVehiculos();
                 }
             });
-
+    
             $('#agregarForm').on('submit', function(event) {
                 event.preventDefault();
                 $.ajax({
@@ -355,13 +369,13 @@
                     }
                 });
             });
-
+    
             // Remover la clase de error al cambiar el valor del campo
             $('#chapa').on('input', function() {
                 $(this).removeClass('field-error');
                 this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
             });
-
+    
             $('#editarModal').on('show.bs.modal', function(event) {
                 var button = $(event.relatedTarget);
                 var id = button.data('id');
@@ -380,7 +394,7 @@
                     }
                 });
             });
-
+    
             $('#editarForm').on('submit', function(event) {
                 event.preventDefault();
                 var id = $('#edit-id').val();
@@ -411,7 +425,7 @@
                     }
                 });
             });
-
+    
             $('#borrarVehiculo').on('click', function() {
                 var id = $('#edit-id').val();
                 Swal.fire({
@@ -443,7 +457,7 @@
                     }
                 });
             });
-
+    
             $('tbody').on('click', 'tr', function() {
                 var id = $(this).data('id');
                 $('#editarModal').modal('show');
@@ -462,15 +476,15 @@
                     }
                 });
             });
-
+    
             $('#chapa, #edit-chapa').on('input', function() {
                 this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
             });
-
+    
             $('#contacto, #edit-contacto').on('input', function() {
                 this.value = this.value.replace(/[^0-9]/g, '');
             });
-
+    
             // Capitalize first letter of each word
             $('.capitalize').on('input', function() {
                 var words = this.value.split(' ');
@@ -481,27 +495,102 @@
                 }
                 this.value = words.join(' ');
             });
-
+    
             // Filtros
-            $('#filter-chapa, #filter-propietario, #filter-modelo, #filter-color, #filter-area').on('input', function() {
+            $('#filter-chapa, #filter-propietario, #filter-modelo, #filter-color, #filter-area').on('input change', function() {
                 loadVehiculos();
             });
-
+    
             $('#agregarModal').on('hidden.bs.modal', function() {
                 $(this).find('form').trigger('reset');
                 $('#chapa').removeClass('field-error'); // Remover la clase de error si existe
             });
-
+    
             $('#editarModal').on('hidden.bs.modal', function() {
                 $(this).find('form').trigger('reset');
             });
-
+    
             // Cargar la primera página de vehículos al iniciar
             loadVehiculos();
-
+    
             updatePaginationHandlers();
         });
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectElement = document.getElementById('filter-area');
 
-    </script>
+            // Función para limitar el número de opciones visibles
+            function limitDropdownOptions() {
+                const options = selectElement.querySelectorAll('option');
+                let visibleCount = 0;
+                options.forEach((option, index) => {
+                    if (option.value === '' || visibleCount < 10) {
+                        option.style.display = '';
+                        if (option.value !== '') visibleCount++;
+                    } else {
+                        option.style.display = 'none';
+                    }
+                });
+            }
+
+            // Llamar a la función para limitar las opciones visibles
+            limitDropdownOptions();
+
+            // Mostrar el dropdown completo al hacer clic
+            selectElement.addEventListener('click', function() {
+                const options = selectElement.querySelectorAll('option');
+                options.forEach(option => option.style.display = '');
+            });
+
+            // Ocultar opciones adicionales al perder el foco
+            selectElement.addEventListener('blur', function() {
+                limitDropdownOptions();
+            });
+
+            // Cerrar el dropdown si se hace clic fuera de él
+            document.addEventListener('click', function(event) {
+                if (!selectElement.contains(event.target)) {
+                    limitDropdownOptions();
+                }
+            });
+
+            const selectElementEdit = document.getElementById('edit-area');
+
+            // Función para limitar el número de opciones visibles en el modal de edición
+            function limitDropdownOptionsEdit() {
+                const options = selectElementEdit.querySelectorAll('option');
+                let visibleCount = 0;
+                options.forEach((option, index) => {
+                    if (option.value === '' || visibleCount < 10) {
+                        option.style.display = '';
+                        if (option.value !== '') visibleCount++;
+                    } else {
+                        option.style.display = 'none';
+                    }
+                });
+            }
+
+            // Llamar a la función para limitar las opciones visibles en el modal de edición
+            limitDropdownOptionsEdit();
+
+            // Mostrar el dropdown completo al hacer clic en el modal de edición
+            selectElementEdit.addEventListener('click', function() {
+                const options = selectElementEdit.querySelectorAll('option');
+                options.forEach(option => option.style.display = '');
+            });
+
+            // Ocultar opciones adicionales al perder el foco en el modal de edición
+            selectElementEdit.addEventListener('blur', function() {
+                limitDropdownOptionsEdit();
+            });
+
+            // Cerrar el dropdown si se hace clic fuera de él en el modal de edición
+            document.addEventListener('click', function(event) {
+                if (!selectElementEdit.contains(event.target)) {
+                    limitDropdownOptionsEdit();
+                }
+            });
+        });
+    </script>                  
 </body>
 </html>
