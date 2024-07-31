@@ -270,7 +270,7 @@
                                     tr.append($('<td>').text(vehiculo.modelo || '-'));
                                     tr.append($('<td>').text(vehiculo.color || '-'));
                                     tr.append($('<td>').text(vehiculo.area || '-'));
-                                    tr.append($('<td>').html(vehiculo.contacto ? `<a href="https://wa.me/${vehiculo.contacto}" target="_blank">${vehiculo.contacto}</a>` : '-'));
+                                    tr.append($('<td>').html(vehiculo.contacto ? `<a href="https://wa.me/${vehiculo.whatsapp}" target="_blank">${vehiculo.contacto}</a>` : '-'));
                                     tr.append($('<td>').text(vehiculo.observacion || ''));
                                     tbody.append(tr);
                                 });

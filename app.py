@@ -61,6 +61,11 @@ def obtener_sistema_operativo(user_agent):
     else:
         return 'Otro'
 
+def formatear_numero(numero):
+    if numero.startswith('0'):
+        numero = numero[1:]  # Eliminar el primer dígito si es '0'
+    return '595' + numero
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///vehiculos.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -149,7 +154,8 @@ def index(page=1):
                     'color': v.color,
                     'area': v.area,
                     'contacto': v.contacto,
-                    'observacion': v.observacion
+                    'observacion': v.observacion,
+                    'whatsapp': formatear_numero(v.contacto)
                 } for v in vehiculos.items
             ],
             'pages': total_pages,
