@@ -12,7 +12,8 @@ areas = [
     "Encuestas (DED)", "Informatica", "Codificacion", "Logistica",
     "Cartografia", "Talentos Humanos (DTH)", "Segmentacion", "Movilidad",
     "Pre-Critica", "Viaticos", "Direccion Administrativa", "Transporte",
-    "DESD", "DEE", "Digitacion", "Combustibles", "Central", "Servicios", "Reclutamiento", "EPH"
+    "DESD", "DEE", "Digitacion", "Combustibles", "Central", "Servicios", "Reclutamiento", "EPH",
+    "Patrimonio", "Central", "DEH", "Informatica T1"
 ]
 
 # Función para eliminar acentos de una cadena de texto
@@ -143,6 +144,8 @@ def index(page=1):
     vehiculos = Vehiculo.query.filter(*filters).paginate(page=page, per_page=per_page, error_out=False)
     total_pages = vehiculos.pages
 
+    pages = get_display_pages(page, total_pages)
+
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return jsonify({
             'vehiculos': [
@@ -159,10 +162,21 @@ def index(page=1):
                 } for v in vehiculos.items
             ],
             'pages': total_pages,
-            'current_page': page
+            'current_page': page,
+            'display_pages': pages
         })
 
-    return render_template(template, vehiculos=vehiculos.items, pages=range(1, total_pages + 1), current_page=page, areas=areas)
+    return render_template(template, vehiculos=vehiculos.items, pages=pages, current_page=page, areas=areas)
+
+def get_display_pages(current_page, total_pages, delta=2):
+    pages = []
+    for i in range(max(1, current_page - delta), min(total_pages + 1, current_page + delta + 1)):
+        pages.append(i)
+    if 1 not in pages:
+        pages.insert(0, 1)
+    if total_pages not in pages:
+        pages.append(total_pages)
+    return pages
 
 # Ruta para agregar un nuevo vehículo
 @app.route('/agregar', methods=['POST'])

@@ -74,11 +74,7 @@
             <div class="no-results" style="display: none;">No se encontraron coincidencias.</div>
         </div>
         <div class="pagination-container">
-            <div class="pagination justify-content-end" id="pagination">
-                {% for page_num in pages %}
-                    <a href="#" class="page-link {% if page_num == current_page %}active{% endif %}" data-page="{{ page_num }}">{{ page_num }}</a>
-                {% endfor %}
-            </div>
+            <div class="pagination justify-content-end" id="pagination"></div>
         </div>
     </div>
 
@@ -283,14 +279,28 @@
     
                             var pagination = $('#pagination');
                             pagination.empty();
-    
-                            for (var i = 1; i <= data.pages; i++) {
+
+                            var startPage = Math.max(data.current_page - 2, 1);
+                            var endPage = Math.min(data.current_page + 2, data.pages);
+
+                            if (data.current_page > 1) {
+                                pagination.append(`<a href="#" class="page-link" data-page="1">Primero</a>`);
+                                pagination.append(`<a href="#" class="page-link" data-page="${data.current_page - 1}">&laquo;</a>`);
+                            }
+
+                            for (var i = startPage; i <= endPage; i++) {
                                 var a = $('<a>').attr('href', '#').addClass('page-link').text(i).attr('data-page', i);
                                 if (i === data.current_page) {
                                     a.addClass('active');
                                 }
                                 pagination.append(a);
                             }
+
+                            if (data.current_page < data.pages) {
+                                pagination.append(`<a href="#" class="page-link" data-page="${data.current_page + 1}">&raquo;</a>`);
+                                pagination.append(`<a href="#" class="page-link" data-page="${data.pages}">Último</a>`);
+                            }
+
     
                             // Actualizar manejadores de eventos de paginación
                             updatePaginationHandlers();
