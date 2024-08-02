@@ -32,6 +32,7 @@
             <input type="text" id="filter-color" class="form-control mr-2" placeholder="Filtrar por color">
             <select id="filter-area" class="form-control" placeholder="Filtrar por área">
                 <option value="" selected disabled>Filtrar por área</option>
+                <option value="" selected>Todos</option>
                 {% for area in areas %}
                     <option value="{{ area }}">{{ area }}</option>
                 {% endfor %}
@@ -118,6 +119,7 @@
                             <label for="area" class="col-sm-3 col-form-label">Área</label>
                             <div class="col-sm-9">
                                 <select class="form-control custom-select" id="area" name="area" required>
+                                    <option value="" selected>Selecciona el area</option>
                                     {% for area in areas %}
                                         <option value="{{ area }}">{{ area }}</option>
                                     {% endfor %}
