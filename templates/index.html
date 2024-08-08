@@ -118,7 +118,7 @@
                         <div class="form-group row">
                             <label for="area" class="col-sm-3 col-form-label">Área</label>
                             <div class="col-sm-9">
-                                <select class="form-control custom-select" id="area" name="area" required>
+                                <select class="form-control custom-select" id="area" name="area">
                                     <option value="" selected>Selecciona el area</option>
                                     {% for area in areas %}
                                         <option value="{{ area }}">{{ area }}</option>
@@ -169,7 +169,7 @@
                         <div class="form-group row">
                             <label for="edit-propietario" class="col-sm-3 col-form-label">Propietario</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control capitalize" id="edit-propietario" name="propietario" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo letras, incluyendo ñ y acentos" oninput="this.value = this.value.replace(/[^A-Za-zñÑáéíóúÁÉÍÓÚ\s]/g, '')" required>
+                                <input type="text" class="form-control capitalize" id="edit-propietario" name="propietario" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+" title="Solo letras, incluyendo ñ y acentos" oninput="this.value = this.value.replace(/[^A-Za-zñÑáéíóúÁÉÍÓÚ\s]/g, '')">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -187,7 +187,8 @@
                         <div class="form-group row">
                             <label for="edit-area" class="col-sm-3 col-form-label">Área</label>
                             <div class="col-sm-9">
-                                <select class="form-control custom-select" id="edit-area" name="area" required>
+                                <select class="form-control custom-select" id="edit-area" name="area">
+                                    <option value="" selected>Selecciona el area</option>
                                     {% for area in areas %}
                                         <option value="{{ area }}">{{ area }}</option>
                                     {% endfor %}
@@ -410,6 +411,11 @@
             $('#editarForm').on('submit', function(event) {
                 event.preventDefault();
                 var id = $('#edit-id').val();
+
+                var formData = $(this).serialize();
+
+                console.log("Datos enviados en el formulario: ", formData);
+
                 $.ajax({
                     url: "/editar/" + id,
                     method: 'POST',

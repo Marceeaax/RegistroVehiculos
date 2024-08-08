@@ -209,7 +209,22 @@ def obtener_vehiculo(id):
 # Ruta para editar la información de un vehículo existente
 @app.route('/editar/<int:id>', methods=['POST'])
 def editar(id):
+    print("Datos recibidos en la solicitud:", request.form)
     vehiculo = Vehiculo.query.get_or_404(id)
+    
+    # Imprimir el vehículo encontrado y los datos recibidos
+    print(f"Vehículo encontrado: ID={vehiculo.id}, Chapa={vehiculo.chapa}")
+    print(f"Datos recibidos: Chapa={request.form['chapa']}, Propietario={request.form['propietario']}, Modelo={request.form['modelo']}, Color={request.form['color']}, Contacto={request.form['contacto']}, Observación={request.form['observacion']}")
+
+    # Verificar si la chapa ha cambiado
+    if vehiculo.chapa != request.form['chapa']:
+        # Verificar si la nueva chapa ya existe en otro vehículo
+        chapa_existente = Vehiculo.query.filter(Vehiculo.chapa == request.form['chapa'], Vehiculo.id != id).first()
+        if chapa_existente:
+            print(f"Chapa duplicada encontrada: {chapa_existente.chapa} para ID: {chapa_existente.id}")
+            return jsonify(success=False, error='La chapa ya existe. Por favor, ingresa una chapa diferente.'), 400
+    
+    # Actualizar los campos del vehículo
     vehiculo.chapa = request.form['chapa']
     vehiculo.propietario = request.form['propietario']
     vehiculo.modelo = request.form['modelo']
@@ -217,12 +232,17 @@ def editar(id):
     vehiculo.area = request.form['area']
     vehiculo.contacto = request.form['contacto']
     vehiculo.observacion = request.form['observacion']
+    
     try:
         db.session.commit()
+        print(f"Vehículo con ID {vehiculo.id} actualizado correctamente.")
         return jsonify(success=True)
-    except IntegrityError:
+    except IntegrityError as e:
         db.session.rollback()
-        return jsonify(success=False, error='La chapa ya existe. Por favor, ingresa una chapa diferente.'), 400
+        print(f"Error de integridad al actualizar el vehículo: {str(e)}")
+        return jsonify(success=False, error='Error al actualizar el vehículo.'), 500
+
+
 
 # Ruta para eliminar un vehículo
 @app.route('/eliminar/<int:id>')
