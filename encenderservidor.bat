@@ -1,3 +1,3 @@
 @echo off
 cd C:\Users\DIGI600\Desktop\RegistroVehiculos
-python app.py
+C:\Users\DIGI600\Desktop\RegistroVehiculos\env\Scripts\python.exe app.py
