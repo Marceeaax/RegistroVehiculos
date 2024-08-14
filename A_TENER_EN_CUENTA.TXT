@@ -8,4 +8,9 @@
 - Ver la posibilidad de hacer un desplegable predictivo a la hora de ingresar la marca de auto
 - Corregir el UI en smartphones para ver si es posible que no se mueva la paginacion y el filtrado,
 no mostrar los 5 de una vez, permitir solamente filtrado de un campo a la vez
+
+Probar polyfils para mejorar la compatibilidad con Chrome 109, especificamente probar este codigo
+
+ <!-- Incluir polyfill antes de cualquier otro script -->
+    <script src="https://cdn.jsdelivr.net/npm/core-js-bundle@3.6.5/minified.js"></script>
 """
